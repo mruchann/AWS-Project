@@ -63,7 +63,7 @@ sudo nano ~/.bash_profile
 
 ### Building the Project
 ```bash
-cd ~/proj1_a/proj1_a
+cd ~/proj1_{a,b}/proj1_{a,b}
 gradle build
 gradle wrapper --gradle-version 6.9.1
 ```
