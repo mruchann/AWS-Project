@@ -59,6 +59,7 @@ sudo nano ~/.bash_profile
 > export AWS_SECRET_ACCESS_KEY=SUPERSECRET12345
 > export AWS_DEFAULT_REGION=us-west-2
 #####################
+source ~/.bash_profile
 ```
 
 ### Building the Project
