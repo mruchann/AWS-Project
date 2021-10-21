@@ -48,16 +48,16 @@ wget https://services.gradle.org/distributions/gradle-6.9.1-bin.zip -P /tmp
 sudo unzip -d /opt/gradle /tmp/gradle-6.9.1-bin.zip
 sudo nano /etc/profile.d/gradle.sh
 # in gradle.sh ######
-export GRADLE_HOME=/opt/gradle/gradle-6.9.1
-export PATH=${GRADLE_HOME}/bin:${PATH}
+> export GRADLE_HOME=/opt/gradle/gradle-6.9.1
+> export PATH=${GRADLE_HOME}/bin:${PATH}
 #####################
 sudo chmod +x /etc/profile.d/gradle.sh
 source /etc/profile.d/gradle.sh
 sudo nano ~/.bash_profile
 # in .bash_profile ##
-export AWS_ACCESS_KEY_ID=EXAMPLEKEY # Keys to access AWS services
-export AWS_SECRET_ACCESS_KEY=SUPERSECRET12345
-export AWS_DEFAULT_REGION=us-west-2
+> export AWS_ACCESS_KEY_ID=EXAMPLEKEY # Keys to access AWS services
+> export AWS_SECRET_ACCESS_KEY=SUPERSECRET12345
+> export AWS_DEFAULT_REGION=us-west-2
 #####################
 ```
 
@@ -84,16 +84,16 @@ EC2 A will start processing the images and sending filenames with cars to the qu
 
 |EC2 A|EC2 B|
 |-----|-----|
-|`Detected labels for 1.jpeg`|`Processing 1.jpeg`|
-|`Detected labels for 10.jpeg`||
-|`Detected labels for 2.jpeg`||
-|`Detected labels for 3.jpeg`|`Processing 3.jpeg`|
-|`Detected labels for 4.jpeg`||
-|`Detected labels for 5.jpeg`||
-|`Detected labels for 6.jpeg`|`Processing 6.jpeg`|
-|`Detected labels for 7.jpeg`||
-|`Detected labels for 8.jpeg`|`Processing 8.jpeg`|
-|`Detected labels for 9.jpeg`||
+|Detected labels for 1.jpeg|Processing 1.jpeg|
+|Detected labels for 10.jpeg||
+|Detected labels for 2.jpeg||
+|Detected labels for 3.jpeg|Processing 3.jpeg|
+|Detected labels for 4.jpeg||
+|Detected labels for 5.jpeg||
+|Detected labels for 6.jpeg|Processing 6.jpeg|
+|Detected labels for 7.jpeg||
+|Detected labels for 8.jpeg|Processing 8.jpeg|
+|Detected labels for 9.jpeg||
 
 At the end `-1` is sent which signals to EC2 B to exit.
 
