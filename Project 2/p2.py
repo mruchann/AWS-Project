@@ -1,4 +1,4 @@
-from sklearn import preprocessing, model_selection, linear_model, ensemble, metrics
+from sklearn import preprocessing, model_selection, linear_model, ensemble, metrics, svm
 import numpy as np
 
 class Wine:
@@ -19,17 +19,21 @@ x_train, x_test, y_train, y_test = model_selection.train_test_split(w.data, w.ta
 
 _lin = linear_model.LinearRegression()
 _forest = ensemble.RandomForestRegressor()
+_svr = svm.SVR()
 
 _lin.fit(x_train, y_train)
 _forest.fit(x_train, y_train)
+_svr.fit(x_train, y_train)
 
 y_pred_lin = _lin.predict(x_test)
 y_pred_forest = _forest.predict(x_test)
+y_pred_svr = _svr.predict(x_test)
 
 linScore_MSE = metrics.mean_squared_error(y_test, y_pred_lin, squared=False)
 forestScore_MSE = metrics.mean_squared_error(y_test, y_pred_forest, squared=False)
+svrScore_MSE = metrics.mean_squared_error(y_test, y_pred_svr, squared=False)
 #linScore_F1 = metrics.f1_score(y_test, y_pred_lin)
 #forestScore_F1 = metrics.f1_score(y_test, y_pred_forest)
 
-print(f"Linear Regression MSE: {linScore_MSE}\nRandom Forest MSE: {forestScore_MSE}")
+print(f"Linear Regression RMSE: {linScore_MSE}\nRandom Forest RMSE: {forestScore_MSE}\nSVR RMSE: {svrScore_MSE}")
 #print(f"Linear Regression F1: {linScore_F1}\nRandom Forest F1: {forestScore_F1}")
