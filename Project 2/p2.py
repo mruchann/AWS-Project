@@ -1,10 +1,16 @@
-from sklearn import preprocessing, model_selection, linear_model, ensemble, metrics, svm
+from sklearn import preprocessing, model_selection, linear_model, ensemble, metrics, svm, decomposition
 import numpy as np
 
+SHOW_VALUES = False
+
 class Wine:
-  def __init__(self, d):
+  def __init__(self, d, reduce_dims=False):
     self.myData = np.genfromtxt(d, delimiter=',', skip_header=1, autostrip=True, usecols=range(0, 12))#, dtype=np.float64, skip_header=1)
     self.data = self.normalize(self.myData[:, :-1])
+    if reduce_dims:
+      p = decomposition.PCA(3)
+      p.fit(self.data)
+      self.data = p.transform(self.data)
     self.target = np.ravel(self.myData[:, -1:])
 
     print(f"Found {self.data.shape[1]} attributes with {self.data.shape[0]} samples")
@@ -23,16 +29,13 @@ def runModel(model):
   #y_pred = np.round(y_pred_decimal) # Since we are scoring with integers out of 10, round to the nearest
   score = metrics.mean_squared_error(y_test, y_pred, squared=False)
   print(f"{str(model)} : {score}")
-  print(f"A sampling of the results...\n{y_pred[:6]}\n")
+  if SHOW_VALUES: print(f"A sampling of the results...\n{y_pred[:6]}\n")
 
 def getMeSomeResults(models):
   print('''#### Root Mean Squared Error ####\n#### Closer to 0.0 is better ####''')
-  print(f"\nSample test data:\n{y_test[:6]}\n")
+  if SHOW_VALUES: print(f"\nSample test data:\n{y_test[:6]}\n")
   for m in models: # Expecting a list of models
     runModel(m)
-
-#print(f"Linear Regression RMSE: {linScore_MSE}\nRandom Forest RMSE: {forestScore_MSE}\nSVR RMSE: {svrScore_MSE}")
-#print(f"Linear Regression F1: {linScore_F1}\nRandom Forest F1: {forestScore_F1}")
 
 getMeSomeResults([linear_model.LinearRegression(), ensemble.RandomForestRegressor(), svm.SVR(), ensemble.RandomForestRegressor(bootstrap=False, max_depth=90, max_features='sqrt', min_samples_leaf=1, min_samples_split=5, n_estimators=1300), svm.SVR(tol=1e-5, C=2.0, epsilon=0.14), svm.SVR(tol=1e-5, C=4.0, epsilon=0.3)])
 
