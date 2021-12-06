@@ -6,7 +6,6 @@ SHOW_VALUES = True
 class Wine:
   def __init__(self, d, reduce_dims=False):
     self.myData = np.genfromtxt(d, delimiter=',', skip_header=1, autostrip=True, usecols=range(0, 12))
-    #self.data = self.normalize(self.myData[:, :-1])
     self.data = self.myData[:, :-1]
     if reduce_dims:
       p = decomposition.PCA(3)
@@ -30,7 +29,6 @@ x_test = w.normalize(x_test)
 def runModel(model):
   model.fit(x_train, y_train)
   y_pred = model.predict(x_test)
-  #y_pred = np.round(y_pred_decimal) # Since we are scoring with integers out of 10, round to the nearest
   score = metrics.mean_squared_error(y_test, y_pred, squared=False)
   print(f"{str(model)} : {score}")
   try:
@@ -70,7 +68,7 @@ def helper_tuneModel(est, grid=False):
                   'min_samples_split': [5],
                   'min_samples_leaf': [1],
                   'bootstrap': [False]}
-  elif str(est) == "SVR()": #{'tol': 1e-05, 'epsilon': 0.14, 'C': 2.0}
+  elif str(est) == "SVR()":
     random_grid = {'tol': [1e-1, 1e-2, 1e-3, 1e-4, 1e-5],
                   'epsilon': [float(x) for x in np.linspace(0.01, 0.3, num=30)],
                   'C': [float(x) for x in np.linspace(0.5, 4.0, 32)]}
